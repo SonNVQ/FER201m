@@ -4,7 +4,7 @@ import { Col, Row } from "react-bootstrap";
 import CompletedFilter from "./CompletedFilter";
 import Todos from "./Todos";
 
-const BASE_URL = "http://sample-pe-fa23.ns.io.vn:9999";
+const BASE_URL = "http://localhost:9999";
 
 export default function Index() {
     const [initTodos, setInitTodos] = useState([]); //cache initial todo list for filtering

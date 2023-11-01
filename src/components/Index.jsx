@@ -4,6 +4,8 @@ import { Col, Row } from "react-bootstrap";
 import CompletedFilter from "./CompletedFilter";
 import Todos from "./Todos";
 
+const BASE_URL = "http://sample-pe-fa23.ns.io.vn:9999";
+
 export default function Index() {
     const [initTodos, setInitTodos] = useState([]); //cache initial todo list for filtering
     const [users, setUsers] = useState([]);
@@ -13,11 +15,11 @@ export default function Index() {
     const [completed, setCompleted] = useState(0); //-1: unfinished, 1: completed, 0: all
 
     useEffect(() => {
-        fetch("http://localhost:9999/user")
+        fetch(`${BASE_URL}/user`)
             .then((response) => response.json())
             .then((data) => setUsers(data));
 
-        fetch("http://localhost:9999/todo")
+        fetch(`${BASE_URL}/todo`)
             .then((response) => response.json())
             .then((data) => {
                 setTodos(data);
@@ -30,8 +32,8 @@ export default function Index() {
         //Filter users
         let newTodos = [...initTodos];
         if (userIdList.length > 0) {
-            newTodos = initTodos.filter((todo) =>
-                userIdList.includes(todo.userId) //Check if userId of the todo is included in userIdList
+            newTodos = initTodos.filter(
+                (todo) => userIdList.includes(todo.userId) //Check if userId of the todo is included in userIdList
             );
         }
 
@@ -82,7 +84,7 @@ export default function Index() {
     //Completed status change handler
     function onTodoStatusChangeHandler(id, status) {
         console.log(id, status);
-        fetch(`http://localhost:9999/todo/${id}`, {
+        fetch(`${BASE_URL}/todo/${id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
